@@ -26,7 +26,7 @@
     formData.append('chunk_hash', chunkHash); // Append the chunk hash
 
     try {
-      const response = await fetch('http://localhost:8000/upload/chunk', {
+      const response = await fetch('api/upload/chunk', {
         method: 'POST',
         body: formData,
       });
@@ -36,7 +36,6 @@
       }
 
       const result = await response.json();
-      console.log(result.message);
     } catch (error) {
       console.error(error);
       throw error;
@@ -75,7 +74,7 @@
       formData.append('file_hash', fileHash); // Append the file hash
 
       try {
-        const response = await fetch('http://localhost:8000/upload/single', {
+        const response = await fetch('api/upload/single', {
           method: 'POST',
           body: formData,
         });
@@ -85,7 +84,6 @@
         }
 
         const result = await response.json();
-        console.log(result.message);
 
         uploadStatus = 'File uploaded successfully';
       } catch (error) {

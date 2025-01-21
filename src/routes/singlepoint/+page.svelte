@@ -38,7 +38,7 @@
 
 <SideBar pageName='Singlepoint Calculation' />
 
-<div class="flex-1 pl-48">
+<div class="flex-1 pl-48 pt-4">
     <div class="flex space-x-4">
         <DropDownList bind:selected={selectedDataStructure} items={test} title="Data structures" />
         <DropDownList bind:selected={selectedArchitecture} items={archList} title="Architectures" />
@@ -52,8 +52,8 @@
     </button>
 
     <div class="mt-4">
-        <p>Selected Data Structure: {selectedDataStructure}</p>
+        <!-- <p>Selected Data Structure: {selectedDataStructure}</p>
         <p>Selected Architecture: {selectedArchitecture}</p>
-        <p>Selected Property: {selectedProperty}</p>
+        <p>Selected Property: {selectedProperty}</p> -->
     </div>
 </div>
