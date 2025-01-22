@@ -13,13 +13,13 @@ export default defineConfig(({ command, mode }) => {
 					'/api': {
 						target: env.API_URL,
 						changeOrigin: true,
-						rewrite: (path) => path.replace(/^\/api/, ''),
-					},
-				},
-			},
+						rewrite: (path) => path.replace(/^\/api/, '')
+					}
+				}
+			}
 		};
 	}
 	return {
-		plugins: [sveltekit()],
+		plugins: [sveltekit()]
 	};
 });

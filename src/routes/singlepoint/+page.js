@@ -1,10 +1,10 @@
 export async function load({ fetch }) {
-  const response = await fetch('/api/upload/files');
-  
-  if (!response.ok) {
-      throw new Error('Failed to fetch data');
-  }
+	const response = await fetch('/api/upload/files');
 
-  const data = await response.json();
-  return { files: data };
+	if (!response.ok) {
+		throw new Error('Failed to fetch data');
+	}
+
+	const data = await response.json();
+	return { files: data };
 }
