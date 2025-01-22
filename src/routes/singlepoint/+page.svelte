@@ -3,9 +3,11 @@
 </script>
 
 <script>
+	import { writable } from 'svelte/store';
 	import FileUploader from '$lib/components/FileUploader.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import DropDownList from '$lib/components/DropDownList.svelte';
+	import RangeSelector from '$lib/components/RangeSelector.svelte';
 
 	export let data;
 
@@ -17,6 +19,7 @@
 	let selectedDataStructure = test[0];
 	let selectedArchitecture = archList[0];
 	let selectedProperty = properties[0];
+	let selectedRange = writable(':');
 
 	function toggleUploader() {
 		showUploader = !showUploader;
@@ -42,6 +45,7 @@
 		<DropDownList bind:selected={selectedDataStructure} items={test} title="Data structures" />
 		<DropDownList bind:selected={selectedArchitecture} items={archList} title="Architectures" />
 		<DropDownList bind:selected={selectedProperty} items={properties} title="Properties" />
+		<RangeSelector maxIndex={100} bind:selectedRange title="Range Selection" />
 	</div>
 	{#if showUploader}
 		<FileUploader on:upload={handleFileUpload} />
