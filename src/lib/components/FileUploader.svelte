@@ -1,13 +1,13 @@
 <script>
 	import SparkMD5 from 'spark-md5';
-	import { createEventDispatcher } from 'svelte';
+
+	export let onUpload;
 
 	let file;
 	let uploadProgress = 0;
 	let uploadStatus = '';
 	let isUploading = false;
 	const chunkSize = 1024 * 1024; // 1MB
-	const dispatch = createEventDispatcher();
 
 	async function uploadChunk(file, chunkNumber, totalChunks) {
 		const start = chunkNumber * chunkSize;
@@ -17,7 +17,7 @@
 		// Compute MD5 hash for the chunk
 		const chunkArrayBuffer = await chunk.arrayBuffer();
 		const chunkHash = SparkMD5.ArrayBuffer.hash(chunkArrayBuffer);
-		console.log(`Chunk ${chunkNumber + 1} MD5 Hash: ${chunkHash}`);
+		console.log(`Chunk ${chunkNumber + 1}:${totalChunks} MD5 Hash: ${chunkHash}`);
 
 		const formData = new FormData();
 		formData.append('file', new File([chunk], file.name)); // Set the original filename
@@ -56,8 +56,8 @@
 					await uploadChunk(file, i, totalChunks);
 					uploadProgress = ((i + 1) / totalChunks) * 100;
 				} catch (error) {
-					uploadStatus = 'Failed to upload file, ' + { error };
-					console.log(uploadStatus);
+					console.error(error); // Log the error
+					uploadStatus = 'Failed to upload file';
 					isUploading = false;
 					return;
 				}
@@ -88,13 +88,15 @@
 
 				uploadStatus = 'File uploaded successfully';
 			} catch (error) {
-				console.error(error);
+				console.error(error); // Log the error
 				uploadStatus = 'Failed to upload file';
 			}
 		}
 
 		isUploading = false;
-		dispatch('upload', { filename: file.name }); // Dispatch the custom event with the filename
+		if (onUpload) {
+			onUpload({ filename: file.name }); // Use the callback prop
+		}
 	}
 
 	function handleFileChange(event) {
