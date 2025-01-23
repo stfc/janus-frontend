@@ -56,7 +56,8 @@
 					await uploadChunk(file, i, totalChunks);
 					uploadProgress = ((i + 1) / totalChunks) * 100;
 				} catch (error) {
-					uploadStatus = 'Failed to upload file';
+					uploadStatus = 'Failed to upload file, ' + { error };
+					console.log(uploadStatus);
 					isUploading = false;
 					return;
 				}
