@@ -116,7 +116,7 @@
 		/>
 		<button
 			on:click={uploadFile}
-			class="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+			class="w-full rounded bg-blue-700 px-4 py-2 font-bold text-white hover:bg-blue-500"
 			>Upload</button
 		>
 		{#if isUploading}
