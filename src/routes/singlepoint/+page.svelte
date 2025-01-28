@@ -7,6 +7,7 @@
 	import FileUploader from '$lib/components/FileUploader.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import DropDownList from '$lib/components/DropDownList.svelte';
+	import MultiSelectList from '$lib/components/MultiSelectList.svelte';
 	import RangeSelector from '$lib/components/RangeSelector.svelte';
 	import SpinningWheel from '$lib/components/SpinningWheel.svelte';
 	import DataDisplay from '$lib/components/DataDisplay.svelte';
@@ -17,14 +18,14 @@
 	let showWaiting = false;
 	let showResults = false;
 	let filenames = data.files;
-	const archList = ['mace_mp', 'chgnet', 'm3gnet'];
-	const properties = ['all properties', 'forces', 'energy', 'stress'];
+	const archList = ['mace_mp', 'mace', 'mace_off', 'm3gnet', 'chgnet', 'alignn', 'sevennet'];
+	const properties = ['forces', 'energy', 'stress', 'hessian'];
 	/** @type {Object} */
 	let results;
 
 	let selectedDataStructure = filenames[0];
 	let selectedArchitecture = archList[0];
-	let selectedProperty = properties[0];
+	let selectedProperty = properties.slice(0, 3);
 	let selectedRange = writable(':');
 
 	function toggleUploader() {
@@ -55,24 +56,16 @@
 			properties: selectedProperty,
 			range_selector: $selectedRange
 		};
-		if (selectedDataStructure === 'mace_mp') {
-			delete queryDict['arch'];
-		}
-		if (selectedProperty === 'all properties') {
-			delete queryDict['properties'];
-		}
-		if (selectedRange === ':') {
-			delete queryDict['range_selector'];
-		}
 
-		const queryParams = new URLSearchParams(queryDict).toString();
 		try {
+			console.log(JSON.stringify(queryDict));
 			toggleWaiting();
-			const response = await fetch(`/api/singlepoint?${queryParams}`, {
-				method: 'GET',
+			const response = await fetch(`/api/singlepoint`, {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
-				}
+				},
+				body: JSON.stringify(queryDict)
 			});
 
 			if (!response.ok) {
@@ -110,7 +103,7 @@
 				</button>
 			</div>
 			<DropDownList bind:selected={selectedArchitecture} items={archList} title="Architectures" />
-			<DropDownList bind:selected={selectedProperty} items={properties} title="Properties" />
+			<MultiSelectList bind:selected={selectedProperty} items={properties} title="Properties" />
 			<RangeSelector maxIndex={100} bind:selectedRange title="Range Selection" />
 			<div class="flex-col px-2">
 				<button
