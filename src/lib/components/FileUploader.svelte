@@ -94,9 +94,7 @@
 		}
 
 		isUploading = false;
-		if (onUpload) {
-			onUpload({ filename: file.name }); // Use the callback prop
-		}
+		onUpload({ filename: file.name });
 	}
 
 	function handleFileChange(event) {

@@ -42,7 +42,7 @@
 		if (response.ok) {
 			const data = await response.json();
 			filenames = data;
-			selectedDataStructure = event.detail.filename; // Set the uploaded filename as the selected data structure
+			selectedDataStructure = event.filename;
 		} else {
 			console.error('Failed to fetch data');
 		}
@@ -93,7 +93,7 @@
 					title="Data structures"
 				/>
 				{#if showUploader}
-					<FileUploader on:upload={handleFileUpload} />
+					<FileUploader onUpload={handleFileUpload} />
 				{/if}
 				<button
 					on:click={toggleUploader}
