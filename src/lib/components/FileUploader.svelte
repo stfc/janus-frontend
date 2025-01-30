@@ -7,40 +7,6 @@
 	let uploadProgress = 0;
 	let uploadStatus = '';
 	let isUploading = false;
-	const chunkSize = 1024 * 1024; // 1MB
-
-	async function uploadChunk(file, chunkNumber, totalChunks) {
-		const start = chunkNumber * chunkSize;
-		const end = Math.min(start + chunkSize, file.size);
-		const chunk = file.slice(start, end);
-
-		// Compute MD5 hash for the chunk
-		const chunkArrayBuffer = await chunk.arrayBuffer();
-		const chunkHash = SparkMD5.ArrayBuffer.hash(chunkArrayBuffer);
-		console.log(`Chunk ${chunkNumber + 1}:${totalChunks} MD5 Hash: ${chunkHash}`);
-
-		const formData = new FormData();
-		formData.append('file', new File([chunk], file.name)); // Set the original filename
-		formData.append('chunk_number', chunkNumber); // Ensure chunk_number is correctly passed
-		formData.append('total_chunks', totalChunks);
-		formData.append('chunk_hash', chunkHash); // Append the chunk hash
-
-		try {
-			const response = await fetch('api/upload/chunk', {
-				method: 'POST',
-				body: formData
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to upload chunk');
-			}
-
-			await response.json();
-		} catch (error) {
-			console.error(error);
-			throw error;
-		}
-	}
 
 	async function uploadFile() {
 		if (!file) return;
@@ -48,53 +14,46 @@
 		isUploading = true;
 		uploadStatus = 'Upload started...';
 
-		if (file.size > chunkSize) {
-			const totalChunks = Math.ceil(file.size / chunkSize);
+		const formData = new FormData();
+		formData.append('file', file);
 
-			for (let i = 0; i < totalChunks; i++) {
-				try {
-					await uploadChunk(file, i, totalChunks);
-					uploadProgress = ((i + 1) / totalChunks) * 100;
-				} catch (error) {
-					console.error(error); // Log the error
+		// Compute MD5 hash for the entire file
+		const fileArrayBuffer = await file.arrayBuffer();
+		const fileHash = SparkMD5.ArrayBuffer.hash(fileArrayBuffer);
+		console.log(`File MD5 Hash: ${fileHash}`);
+		formData.append('file_hash', fileHash);
+
+		try {
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', 'api/upload/single', true);
+
+			xhr.upload.onprogress = function (event) {
+				if (event.lengthComputable) {
+					uploadProgress = (event.loaded / event.total) * 100;
+				}
+			};
+
+			xhr.onload = function () {
+				if (xhr.status === 200) {
+					uploadStatus = 'File uploaded successfully';
+				} else {
 					uploadStatus = 'Failed to upload file';
-					isUploading = false;
-					return;
 				}
-			}
+				isUploading = false;
+				onUpload({ filename: file.name });
+			};
 
-			uploadStatus = 'File uploaded successfully';
-		} else {
-			const formData = new FormData();
-			formData.append('file', file);
-
-			// Compute MD5 hash for the entire file
-			const fileArrayBuffer = await file.arrayBuffer();
-			const fileHash = SparkMD5.ArrayBuffer.hash(fileArrayBuffer);
-			console.log(`File MD5 Hash: ${fileHash}`);
-			formData.append('file_hash', fileHash); // Append the file hash
-
-			try {
-				const response = await fetch('api/upload/single', {
-					method: 'POST',
-					body: formData
-				});
-
-				if (!response.ok) {
-					throw new Error('Failed to upload file');
-				}
-
-				await response.json();
-
-				uploadStatus = 'File uploaded successfully';
-			} catch (error) {
-				console.error(error); // Log the error
+			xhr.onerror = function () {
 				uploadStatus = 'Failed to upload file';
-			}
-		}
+				isUploading = false;
+			};
 
-		isUploading = false;
-		onUpload({ filename: file.name });
+			xhr.send(formData);
+		} catch (error) {
+			console.error(error);
+			uploadStatus = 'Failed to upload file';
+			isUploading = false;
+		}
 	}
 
 	function handleFileChange(event) {

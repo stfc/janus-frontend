@@ -22,6 +22,7 @@
 	const properties = ['forces', 'energy', 'stress', 'hessian'];
 	/** @type {Object} */
 	let results;
+	let fileContent;
 
 	let selectedDataStructure = filenames[0];
 	let selectedArchitecture = archList[0];
@@ -71,7 +72,9 @@
 			if (!response.ok) {
 				throw new Error('Failed to calculate');
 			}
-			results = await response.json();
+			const data = await response.json();
+			results = data.results;
+			fileContent = data.file.content;
 			showResults = true;
 			toggleWaiting();
 			console.log('Calculation result:', results);
@@ -126,6 +129,7 @@
 	<div class="ml-48 py-4">
 		{#if showResults}
 			<DataDisplay data={results} />
+			{fileContent}
 		{/if}
 	</div>
 </div>
