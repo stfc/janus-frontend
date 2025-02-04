@@ -5,12 +5,12 @@
 <script>
 	import { writable } from 'svelte/store';
 	import FileUploader from '$lib/components/FileUploader.svelte';
-	import SideBar from '$lib/components/SideBar.svelte';
 	import DropDownList from '$lib/components/DropDownList.svelte';
 	import MultiSelectList from '$lib/components/MultiSelectList.svelte';
 	import RangeSelector from '$lib/components/RangeSelector.svelte';
 	import SpinningWheel from '$lib/components/SpinningWheel.svelte';
 	import DataDisplay from '$lib/components/DataDisplay.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	export let data;
 
@@ -22,7 +22,13 @@
 	const properties = ['forces', 'energy', 'stress', 'hessian'];
 	/** @type {Object} */
 	let results;
-	let fileContent;
+	let fileContent = `
+    3
+    Example XYZ file
+    H 0.0 0.0 0.0
+    O 0.0 0.0 1.0
+    H 1.0 0.0 0.0
+    `;
 
 	let selectedDataStructure = filenames[0];
 	let selectedArchitecture = archList[0];
@@ -37,6 +43,7 @@
 		showWaiting = !showWaiting;
 	}
 
+	// @ts-ignore
 	async function handleFileUpload(event) {
 		// Re-fetch the data after a file is uploaded
 		const response = await fetch('/api/upload/files');
@@ -84,10 +91,10 @@
 	}
 </script>
 
-<SideBar pageName="Singlepoint Calculation" />
+<PageHeader pageName="Singlepoint" />
 
 <div class="flex-col">
-	<div class="flex-1 pl-48 pt-4">
+	<div class="flex-1 pl-4 pt-4">
 		<div class="flex space-x-4">
 			<div class="flex-col space-y-4">
 				<DropDownList
@@ -126,10 +133,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="ml-48 py-4">
+	<div class="px-4 py-4">
 		{#if showResults}
 			<DataDisplay data={results} />
 			{fileContent}
 		{/if}
+	</div>
+	<div class="flex px-4">
+		test
+		<!-- <Visualiser {fileContent} /> -->
 	</div>
 </div>

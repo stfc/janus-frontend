@@ -1,5 +1,5 @@
 <script>
-	import SideBar from '../lib/components/SideBar.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 </script>
 
-<SideBar pageName="Janus Web" />
+<PageHeader pageName="Janus-Web" />
