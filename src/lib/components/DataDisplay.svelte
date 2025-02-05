@@ -25,6 +25,8 @@
 						<span class="inline-block rounded bg-red-400 px-4 py-2 text-white">
 							{data[header]}
 						</span>
+					{:else if typeof val === 'object'}
+						<svelte:self data={data[header]} />
 					{:else}
 						<span class="inline-block rounded bg-blue-300 px-4 py-2 text-black">
 							{data[header]}

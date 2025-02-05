@@ -11,7 +11,8 @@
 			<a href="/" class="text-white hover:text-gray-300">Home</a>
 			<a href="/singlepoint" class="text-white hover:text-gray-300">Singlepoint</a>
 			<a href="/geomopt" class="text-white hover:text-gray-300">Geomopt</a>
-			<a href="/test" class="text-white hover:text-gray-300">Test</a>
+			<a href="/threeDmol.js" class="text-white hover:text-gray-300">3Dmol.js test</a>
+			<a href="/NglViewer" class="text-white hover:text-gray-300">NGL Viewer test</a>
 		</nav>
 	</header>
 </div>

@@ -1,33 +1,16 @@
 <script>
+	import DataDisplay from '$lib/components/DataDisplay.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Visualiser from '$lib/components/Visualiser.svelte';
+	import NumberInput from '$lib/components/NumberInput.svelte';
 
-	// Example XYZ file content
-	const exampleXYZ = `
-    3
-    Example XYZ file
-    H 0.0 0.0 0.0
-    O 0.0 0.0 1.0
-    H 1.0 0.0 0.0
-    `;
-	const example2 = `
-    8
-    Example 2
-    Na 0.00000000 0.00000000 0.00000000
-    Cl 2.82000000 0.00000000 0.00000000
-    Na 0.00000000 2.82000000 2.82000000
-    Cl 2.82000000 2.82000000 2.82000000
-    Na 2.82000000 0.00000000 2.82000000
-    Cl 0.00000000 0.00000000 2.82000000
-    Na 2.82000000 2.82000000 0.00000000
-    Cl 0.00000000 2.82000000 0.00000000
-    `;
+	const radiusDict = { stick: 0.1, sphere: 0.2, line: 1, cross: 1, cartoon: 1 };
+	const keys = Object.keys(radiusDict);
 </script>
 
 <PageHeader pageName={'Geomopt'} />
-<div class="p-4">
-	<h1 class="mb-4 text-2xl font-bold">3Dmol.js Viewer</h1>
-	<Visualiser fileContent={exampleXYZ} />
-	test
-	{example2}
+<div class="space-x-2 p-4">
+	{#each keys as item}
+		<NumberInput bind:selectedValue={radiusDict[item]} title={item} />
+	{/each}
 </div>
+<DataDisplay data={radiusDict} />

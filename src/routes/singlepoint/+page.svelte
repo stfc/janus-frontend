@@ -77,6 +77,7 @@
 			});
 
 			if (!response.ok) {
+				toggleWaiting();
 				throw new Error('Failed to calculate');
 			}
 			const data = await response.json();
