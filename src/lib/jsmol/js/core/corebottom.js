@@ -1,0 +1,4 @@
+
+})();
+
+Clazz._coreLoaded = true;

@@ -1,22 +1,19 @@
-# sv
+# Janus-Frontend
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Web frontend server for janus-core
 
-## Creating a project
+## Installation
 
-If you're seeing this, you've probably already done this step. Congrats!
+Clone the repository from Github and then install with npm:
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone git@github.com:Cbameron12/janus-frontend.git
+npm install
 ```
 
-## Developing
+## Setup and developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies, copy .env-template and rename the copy `.env` and change the variables as required. To run locally use `localhost` for HOST and `http://localhost:8000` for API_URL. To start a development server run with npm:
 
 ```bash
 npm run dev
@@ -36,5 +33,3 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-Run with dodgy chrome, currently fixing upload in chunks

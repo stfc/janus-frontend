@@ -13,6 +13,8 @@
 			<a href="/geomopt" class="text-white hover:text-gray-300">Geomopt</a>
 			<a href="/threeDmol.js" class="text-white hover:text-gray-300">3Dmol.js test</a>
 			<a href="/NglViewer" class="text-white hover:text-gray-300">NGL Viewer test</a>
+			<a href="/jsmolViewer" class="text-white hover:text-gray-300">JSmolViewer test</a>
+			<a href="/weas" class="text-white hover:text-gray-300">Weas widget test</a>
 		</nav>
 	</header>
 </div>

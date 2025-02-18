@@ -40,6 +40,7 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"3dmol": "^2.4.2",
 		"ngl": "^2.4.0",
-		"spark-md5": "^3.0.2"
+		"spark-md5": "^3.0.2",
+		"weas": "^0.1.43"
 	}
 }

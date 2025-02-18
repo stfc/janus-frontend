@@ -1,0 +1,25 @@
+<script>
+	import PageHeader from '$lib/components/PageHeader.svelte';
+	import Weas from '$lib/components/weas.svelte';
+
+	const xyzData = `12
+  Properties=species:S:1:pos:R:3 pbc="F F F"
+  C        0.00000000       1.39524800       0.00000000
+  C        1.20832000       0.69762400       0.00000000
+  C        1.20832000      -0.69762400       0.00000000
+  C        0.00000000      -1.39524800       0.00000000
+  C       -1.20832000      -0.69762400       0.00000000
+  C       -1.20832000       0.69762400       0.00000000
+  H        0.00000000       2.48236000       0.00000000
+  H        2.14978700       1.24118000       0.00000000
+  H        2.14978700      -1.24118000       0.00000000
+  H        0.00000000      -2.48236000       0.00000000
+  H       -2.14978700      -1.24118000       0.00000000
+  H       -2.14978700       1.24118000       0.00000000
+    `;
+</script>
+
+<PageHeader pageName="weas test" />
+<div class="container mx-auto p-4">
+	<Weas xyzFile={xyzData} />
+</div>

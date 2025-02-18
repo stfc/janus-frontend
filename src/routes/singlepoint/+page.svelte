@@ -141,7 +141,6 @@
 		{/if}
 	</div>
 	<div class="flex px-4">
-		test
 		<!-- <Visualiser {fileContent} /> -->
 	</div>
 </div>
