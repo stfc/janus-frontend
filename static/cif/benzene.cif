@@ -1,0 +1,32 @@
+data_benzene
+_chemical_formula_structural       C6H6
+_chemical_formula_sum              "C6 H6"
+_cell_length_a       7.3974
+_cell_length_b       9.6352
+_cell_length_c       10.1688
+_cell_angle_alpha    64.872
+_cell_angle_beta     72.375
+_cell_angle_gamma    76.612
+_space_group_name_H-M_alt    "P -1"
+_space_group_IT_number       2
+
+loop_
+  _atom_site_type_symbol
+  _atom_site_label
+  _atom_site_symmetry_multiplicity
+  _atom_site_Cartn_x
+  _atom_site_Cartn_y
+  _atom_site_Cartn_z
+  _atom_site_occupancy
+  C   C1        1.0  0.00000  1.39525  0.00000  1.0000
+  C   C2        1.0  1.20832  0.69762  0.00000  1.0000
+  C   C3        1.0  1.20832  -0.69762  0.00000  1.0000
+  C   C4        1.0  0.00000  -1.39525  0.00000  1.0000
+  C   C5        1.0  -1.20832  -0.69762  0.00000  1.0000
+  C   C6        1.0  -1.20832  0.69762  0.00000  1.0000
+  H   H1        1.0  0.00000  2.48236  0.00000  1.0000
+  H   H2        1.0  2.14979  1.24118  0.00000  1.0000
+  H   H3        1.0  2.14979  -1.24118  0.00000  1.0000
+  H   H4        1.0  0.00000  -2.48236  0.00000  1.0000
+  H   H5        1.0  -2.14979  -1.24118  0.00000  1.0000
+  H   H6        1.0  -2.14979  1.24118  0.00000  1.0000
