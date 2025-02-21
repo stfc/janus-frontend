@@ -4,7 +4,7 @@
 
 	let domElement;
 	let editor;
-	let selectedStructure = 'molecule';
+	let selectedStructure = 'c2h6so.xyz';
 
 	async function fetchFile(filename) {
 		if (!filename.includes('.')) {
@@ -19,19 +19,19 @@
 	}
 
 	async function updateAtoms(filename, fileContent = null) {
-		let structureData;
-		switch (filename) {
-			case 'molecule': {
-				editor.clear();
-				const newFilename = 'c2h6so.xyz';
-				structureData = fileContent || (await fetchFile(newFilename));
-				const atomsList = weas.parseXYZ(structureData);
-				editor.avr.atoms = atomsList;
-				editor.avr.modelStyle = 1;
-				editor.instancedMeshPrimitive.fromSettings([]);
-				break;
-			}
+		editor.clear();
+		const structureData = fileContent || (await fetchFile(filename));
+		let atomsList;
+
+		if (filename.endsWith('.xyz')) {
+			atomsList = weas.parseXYZ(structureData);
+		} else if (filename.endsWith('.cif')) {
+			atomsList = weas.parseCIF(structureData);
 		}
+
+		editor.avr.atoms = atomsList;
+		editor.avr.modelStyle = 1;
+		editor.instancedMeshPrimitive.fromSettings([]);
 	}
 
 	function handleFileUpload(event) {
@@ -59,19 +59,12 @@
 <h1>WEAS (Web Environment For Atomistic Structures)</h1>
 Select structure
 <select bind:value={selectedStructure} on:change={() => updateAtoms(selectedStructure)}>
-	<option value="molecule">C2H6SO Molecule</option>
+	<option value="c2h6so.xyz">C2H6SO Molecule</option>
 	<option value="urea.cif">Hydrogen bond</option>
 	<option value="catio3.cif">CaTiO3 Crystal</option>
 	<option value="CoO.cif">CoO Crystal</option>
-	<option value="h2o-homo.cube">Isosurface data</option>
-	<option value="2d-slice">2D slice</option>
 	<option value="deca_ala_md.xyz">MD trajectory</option>
 	<option value="au.cif">Selection</option>
-	<option value="Primitives">Primitives</option>
-	<option value="mesh_primitives_settings.json">Primitives instance</option>
-	<option value="any_mesh_settings.json">Any Mesh</option>
-	<option value="phonon">Phonon</option>
-	<option value="species">Species</option>
 </select>
 
 <label for="file-upload" class="custom-file-upload">

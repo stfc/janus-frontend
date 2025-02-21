@@ -1,7 +1,3 @@
-<script context="module">
-	export { load } from './+page.js';
-</script>
-
 <script>
 	import { writable } from 'svelte/store';
 	import FileUploader from '$lib/components/FileUploader.svelte';
