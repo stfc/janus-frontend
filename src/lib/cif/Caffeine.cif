@@ -1,0 +1,54 @@
+
+#======================================================================
+# CRYSTAL DATA
+#----------------------------------------------------------------------
+data_VESTA_phase_1
+
+_chemical_name_common                  '1,3,7-Trimethylpurine-2,6-dione'
+_cell_length_a                         9.403749
+_cell_length_b                         9.403749
+_cell_length_c                         9.403749
+_cell_angle_alpha                      90.000000
+_cell_angle_beta                       90.000000
+_cell_angle_gamma                      90.000000
+_cell_volume                           1.000000
+_space_group_name_H-M_alt              'P 1'
+_space_group_IT_number                 1
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_U_iso_or_equiv
+   _atom_site_type_symbol
+   N1         1.0     0.685713     0.615805     0.439040    Uiso  ? N
+   C1         1.0     0.699048     0.462664     0.440667    Uiso  ? C
+   N2         1.0     0.574396     0.374433     0.426024    Uiso  ? N
+   C2         1.0     0.551969     0.685703     0.466189    Uiso  ? C
+   C3         1.0     0.431230     0.589496     0.471963    Uiso  ? C
+   C4         1.0     0.443523     0.441949     0.456236    Uiso  ? C
+   N3         1.0     0.284873     0.615411     0.492870    Uiso  ? N
+   C5         1.0     0.214412     0.485729     0.490201    Uiso  ? C
+   N4         1.0     0.309852     0.379569     0.467805    Uiso  ? N
+   C6         1.0     0.587454     0.219144     0.445463    Uiso  ? C
+   O1         1.0     0.816810     0.407537     0.445272    Uiso  ? O
+   O2         1.0     0.547906     0.814843     0.480194    Uiso  ? O
+   C7         1.0     0.218836     0.754090     0.516786    Uiso  ? C
+   C8         1.0     0.818564     0.700633     0.442347    Uiso  ? C
+   H1         1.0     0.100000     0.468906     0.503281    Uiso  ? H
+   H2         1.0     0.675239     0.179032     0.379638    Uiso  ? H
+   H3         1.0     0.488813     0.166718     0.411509    Uiso  ? H
+   H4         1.0     0.608712     0.190262     0.556727    Uiso  ? H
+   H5         1.0     0.261085     0.833282     0.441826    Uiso  ? H
+   H6         1.0     0.240678     0.792266     0.625136    Uiso  ? H
+   H7         1.0     0.103169     0.746785     0.502568    Uiso  ? H
+   H8         1.0     0.900000     0.650961     0.374864    Uiso  ? H
+   H9         1.0     0.860548     0.709002     0.551059    Uiso  ? H
+   H10        1.0     0.798679     0.808313     0.401672    Uiso  ? H
