@@ -1,37 +1,47 @@
 <script>
 	import { onMount } from 'svelte';
-	import * as weas from 'weas/dist/weas.mjs';
 
 	let domElement;
 	let editor;
-	let selectedStructure = 'c2h6so.xyz';
+	let weas;
+	const fileList = import.meta.glob('/src/lib/cif/*');
+	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
+	export let selectedStructure = files[0];
+	export let givenFile = undefined;
+	export let height = 300;
+	export let width = 100;
 
-	async function fetchFile(filename) {
-		if (!filename.includes('.')) {
-			return '';
+	async function retrieveFile(file) {
+		const response = await fetch(`/src/lib/cif/${file}`);
+		if (response.ok) {
+			const data = await response.text();
+			return data;
 		}
-		const baseUrl = 'https://raw.githubusercontent.com/superstar54/weas/main/demo/datas/';
-		const response = await fetch(`${baseUrl}${filename}`);
-		if (!response.ok) {
-			throw new Error(`Failed to load file from GitHub: ${filename}`);
+		console.error('Failed to load file content');
+	}
+
+	async function updateViewer(fileContent) {
+		if (!editor) return;
+		editor.clear();
+		const atomsList = await weas.parseCIF(fileContent);
+
+		if (!atomsList) {
+			console.error('Failed to parse structure data');
+			return;
 		}
-		return await response.text();
+
+		if (editor.avr) {
+			editor.avr.atoms = atomsList;
+			editor.avr.modelStyle = 1;
+			editor.instancedMeshPrimitive.fromSettings([]);
+		} else {
+			console.error('Editor or editor.avr is not defined');
+		}
 	}
 
 	async function updateAtoms(filename, fileContent = null) {
-		editor.clear();
-		const structureData = fileContent || (await fetchFile(filename));
-		let atomsList;
-
-		if (filename.endsWith('.xyz')) {
-			atomsList = weas.parseXYZ(structureData);
-		} else if (filename.endsWith('.cif')) {
-			atomsList = weas.parseCIF(structureData);
-		}
-
-		editor.avr.atoms = atomsList;
-		editor.avr.modelStyle = 1;
-		editor.instancedMeshPrimitive.fromSettings([]);
+		const structureData = fileContent || (await retrieveFile(filename));
+		await updateViewer(structureData);
 	}
 
 	function handleFileUpload(event) {
@@ -47,40 +57,48 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		if (typeof window !== 'undefined') {
+			weas = await import('weas/dist/weas.mjs');
 			editor = new weas.WEAS({ domElement });
 			window.editor = editor;
-			updateAtoms(selectedStructure);
+			if (givenFile) {
+				updateViewer(givenFile);
+			} else {
+				updateAtoms(selectedStructure);
+			}
 		}
 	});
+	$: if (weas && selectedStructure) {
+		updateAtoms(selectedStructure);
+	}
 </script>
 
-<h1>WEAS (Web Environment For Atomistic Structures)</h1>
-Select structure
-<select bind:value={selectedStructure} on:change={() => updateAtoms(selectedStructure)}>
-	<option value="c2h6so.xyz">C2H6SO Molecule</option>
-	<option value="urea.cif">Hydrogen bond</option>
-	<option value="catio3.cif">CaTiO3 Crystal</option>
-	<option value="CoO.cif">CoO Crystal</option>
-	<option value="deca_ala_md.xyz">MD trajectory</option>
-	<option value="au.cif">Selection</option>
-</select>
-
+<div id="viewer" style="height: {height}px; width: {width};" bind:this={domElement}></div>
 <label for="file-upload" class="custom-file-upload">
 	<i class="fas fa-cloud-upload-alt"></i> Upload Structure
 </label>
 <input id="file-upload" type="file" style="display: none" on:change={handleFileUpload} />
-
-<div id="viewer" bind:this={domElement}></div>
+<div class="mt-2">
+	<label for="file-select" class="mr-2">Files:</label>
+	<select
+		id="file-select"
+		class="rounded border border-gray-300"
+		bind:value={selectedStructure}
+		on:change={() => updateAtoms(selectedStructure)}
+	>
+		{#each files as file}
+			<option value={file}>{file}</option>
+		{/each}
+	</select>
+</div>
 
 <style>
-	@import 'weas/dist/style.css';
-	@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css');
+	/* @import 'weas/dist/style.css'; */
+	/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'); */
 
 	#viewer {
 		position: relative;
 		width: 100%;
-		height: 800px;
 	}
 </style>

@@ -2,24 +2,43 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Weas from '$lib/components/weas.svelte';
 
-	const xyzData = `12
-  Properties=species:S:1:pos:R:3 pbc="F F F"
-  C        0.00000000       1.39524800       0.00000000
-  C        1.20832000       0.69762400       0.00000000
-  C        1.20832000      -0.69762400       0.00000000
-  C        0.00000000      -1.39524800       0.00000000
-  C       -1.20832000      -0.69762400       0.00000000
-  C       -1.20832000       0.69762400       0.00000000
-  H        0.00000000       2.48236000       0.00000000
-  H        2.14978700       1.24118000       0.00000000
-  H        2.14978700      -1.24118000       0.00000000
-  H        0.00000000      -2.48236000       0.00000000
-  H       -2.14978700      -1.24118000       0.00000000
-  H       -2.14978700       1.24118000       0.00000000
-    `;
+	const cifData = `data_image0
+_chemical_formula_structural       NaClNaClNaClNaCl
+_chemical_formula_sum              "Na4 Cl4"
+_cell_length_a       5.64
+_cell_length_b       5.64
+_cell_length_c       5.64
+_cell_angle_alpha    90
+_cell_angle_beta     90
+_cell_angle_gamma    90
+
+_space_group_name_H-M_alt    "P 1"
+_space_group_IT_number       1
+
+loop_
+  _space_group_symop_operation_xyz
+  'x, y, z'
+
+loop_
+  _atom_site_type_symbol
+  _atom_site_label
+  _atom_site_symmetry_multiplicity
+  _atom_site_fract_x
+  _atom_site_fract_y
+  _atom_site_fract_z
+  _atom_site_occupancy
+  Na  Na1       1.0  0.00000  0.00000  0.00000  1.0000
+  Cl  Cl1       1.0  0.50000  0.00000  0.00000  1.0000
+  Na  Na2       1.0  0.00000  0.50000  0.50000  1.0000
+  Cl  Cl2       1.0  0.50000  0.50000  0.50000  1.0000
+  Na  Na3       1.0  0.50000  0.00000  0.50000  1.0000
+  Cl  Cl3       1.0  0.00000  0.00000  0.50000  1.0000
+  Na  Na4       1.0  0.50000  0.50000  0.00000  1.0000
+  Cl  Cl4       1.0  0.00000  0.50000  0.00000  1.0000
+  `;
 </script>
 
 <PageHeader pageName="weas test" />
 <div class="container mx-auto p-4">
-	<Weas xyzFile={xyzData} />
+	<Weas givenFile={cifData} height={800} />
 </div>

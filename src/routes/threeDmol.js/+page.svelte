@@ -5,5 +5,5 @@
 
 <PageHeader pageName={'3Dmol.js test'} />
 <div class="container mx-auto p-4">
-	<ThreeDmol />
+	<ThreeDmol height={800} />
 </div>

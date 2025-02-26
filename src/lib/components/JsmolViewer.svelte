@@ -1,57 +1,89 @@
 <script>
 	import { onMount } from 'svelte';
-	/* global Jmol */
+	export let givenFile = undefined;
 
-	export let xyzData;
+	let JmolDiv;
+	let Jmol;
+	const myJmol = 'myJmol';
+	const fileList = import.meta.glob('/src/lib/cif/*');
+	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
+	export let selectedStructure = files[0];
+	export let height = 300; // Height in pixels
+	export let width = 100; // Width in percentage
+	let zoom = 20;
 
-	let viewerDiv;
-	const appletId = 'jsmolApplet';
+	function calcZoom() {
+		const ratio = height / 300;
+		zoom = 20 * ratio;
+	}
 
-	onMount(() => {
-		const checkJmolLoaded = () => {
-			if (typeof Jmol === 'undefined') {
-				console.error('JSmol library not loaded.');
-				return;
-			}
-
-			const Info = {
-				addSelectionOptions: false,
-				use: 'HTML5',
-				color: 'white',
-				width: '80%',
-				height: '80%',
-				debug: false,
-				j2sPath: '/src/lib/jsmol/j2s',
-				script: `
-					load DATA "modelXYZ"
-					${xyzData}
-					END "modelXYZ"
+	function updateAtoms() {
+		const JmolInfo = {
+			width: '100%',
+			height: '100%',
+			color: '#E2F4F5',
+			j2sPath: '/src/lib/jsmol/j2s',
+			use: 'html5',
+			script: `
+					load /src/lib/cif/${selectedStructure};
+					zoom ${zoom}
 				`
-			};
-
-			// Create the JSmol applet and insert it into the viewerDiv
-			viewerDiv.innerHTML = Jmol.getAppletHtml(appletId, Info);
-			Jmol.getApplet(appletId, Info);
 		};
+		JmolDiv.innerHTML = Jmol.getAppletHtml(myJmol, JmolInfo);
+	}
 
-		// Check if JSmol is loaded
-		if (typeof Jmol === 'undefined') {
-			const script = document.createElement('script');
-			script.src = '/src/lib/jsmol/JSmol.min.js';
-			script.onload = checkJmolLoaded;
-			document.head.appendChild(script);
+	onMount(async () => {
+		let script;
+		calcZoom();
+		if (givenFile) {
+			script = `
+					load DATA "modelCIF"
+					${givenFile}
+					END "modelCIF"`;
 		} else {
-			checkJmolLoaded();
+			script = `
+					load /src/lib/cif/${selectedStructure};
+					zoom ${zoom}
+					`;
 		}
+		const JmolInfo = {
+			width: '100%',
+			height: '100%',
+			color: '#E2F4F5',
+			j2sPath: '/src/lib/jsmol/j2s',
+			use: 'html5',
+			script: script
+		};
+		JmolDiv.innerHTML = await Jmol.getAppletHtml(myJmol, JmolInfo);
 	});
+
+	$: if (JmolDiv && selectedStructure) {
+		updateAtoms();
+	}
 </script>
 
 <svelte:head>
 	<script src="/src/lib/jsmol/JSmol.min.js"></script>
 </svelte:head>
-
-<div class="flex h-screen w-full items-center justify-center">
-	<div bind:this={viewerDiv} class="h-full w-full flex-1">
-		<!-- JSmol applet will be injected here -->
-	</div>
+<div class="flex p-4">
+	<div id="JmolDiv" bind:this={JmolDiv} style="height: {height}px; width: {width}%;"></div>
 </div>
+<div class="mt-2">
+	<label for="file-select" class="mr-2">Files:</label>
+	<select
+		id="file-select"
+		class="rounded border border-gray-300"
+		bind:value={selectedStructure}
+		on:change={() => updateAtoms()}
+	>
+		{#each files as file}
+			<option value={file}>{file}</option>
+		{/each}
+	</select>
+</div>
+
+<style>
+	#JmolDiv {
+		position: relative;
+	}
+</style>

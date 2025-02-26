@@ -15,6 +15,7 @@
 			<a href="/NglViewer" class="text-white hover:text-gray-300">NGL Viewer test</a>
 			<a href="/jsmolViewer" class="text-white hover:text-gray-300">JSmolViewer test</a>
 			<a href="/weas" class="text-white hover:text-gray-300">Weas widget test</a>
+			<a href="/comparison" class="text-white hover:text-gray-300">Comparison test</a>
 		</nav>
 	</header>
 </div>

@@ -3,7 +3,10 @@
 
 	const fileList = import.meta.glob('/src/lib/cif/*');
 	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
-	let selectedFile = files[0];
+	export let selectedStructure = files[0];
+	export let givenFile = undefined;
+	export let height = 300;
+	export let width = '100%'; // Add width as a prop
 	let viewer;
 
 	function updateStyle(style) {
@@ -17,7 +20,7 @@
 		}
 	}
 
-	async function readFile(file) {
+	async function retrieveFile(file) {
 		const response = await fetch(`/src/lib/cif/${file}`);
 		if (response.ok) {
 			const data = await response.text();
@@ -44,14 +47,21 @@
 			const element = document.querySelector('#container-01');
 			const config = { backgroundColor: 'black' };
 			viewer = window.$3Dmol.createViewer(element, config);
-			await readFile(selectedFile);
+			if (givenFile) {
+				updateViewer(givenFile);
+			} else {
+				await retrieveFile(selectedStructure);
+			}
 			viewer.zoom(0.8, 2000);
 		};
 		document.head.appendChild(script);
 	});
+	$: if (viewer && selectedStructure) {
+		retrieveFile(selectedStructure);
+	}
 </script>
 
-<div id="container-01" class="mol-container"></div>
+<div id="container-01" class="mol-container" style="height: {height}px; width: {width};"></div>
 <div class="mt-2">
 	<label for="style-select" class="mr-2">Select Style:</label>
 	<select
@@ -72,19 +82,18 @@
 	<select
 		id="file-select"
 		class="rounded border border-gray-300"
-		bind:value={selectedFile}
-		on:change={(e) => readFile(e.target.value)}
+		bind:value={selectedStructure}
+		on:change={(e) => retrieveFile(e.target.value)}
 	>
 		{#each files as file}
 			<option value={file}>{file}</option>
 		{/each}
 	</select>
 </div>
+{givenFile}
 
 <style>
 	.mol-container {
-		width: 60%;
-		height: 400px;
 		position: relative;
 	}
 </style>

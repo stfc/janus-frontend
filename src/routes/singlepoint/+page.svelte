@@ -7,6 +7,10 @@
 	import SpinningWheel from '$lib/components/SpinningWheel.svelte';
 	import DataDisplay from '$lib/components/DataDisplay.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
+	import ThreeDmol from '$lib/components/ThreeDmol.svelte';
+	import Weas from '$lib/components/weas.svelte';
+
+	// import Calculate from '+page.js';
 
 	export let data;
 
@@ -58,7 +62,8 @@
 			struct: selectedDataStructure,
 			arch: selectedArchitecture,
 			properties: selectedProperty,
-			range_selector: $selectedRange
+			range_selector: $selectedRange,
+			format: 'cif'
 		};
 
 		try {
@@ -132,11 +137,10 @@
 	</div>
 	<div class="px-4 py-4">
 		{#if showResults}
+			<ThreeDmol givenFile={fileContent} />
+			<Weas givenFile={fileContent} />
 			<DataDisplay data={results} />
-			{fileContent}
 		{/if}
 	</div>
-	<div class="flex px-4">
-		<!-- <Visualiser {fileContent} /> -->
-	</div>
+	<div class="flex px-4"></div>
 </div>
