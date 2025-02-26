@@ -7,6 +7,7 @@
 	export let givenFile = undefined;
 	export let height = 300;
 	export let width = '100%'; // Add width as a prop
+	export let example = true;
 	let viewer;
 
 	function updateStyle(style) {
@@ -56,7 +57,8 @@
 		};
 		document.head.appendChild(script);
 	});
-	$: if (viewer && selectedStructure) {
+
+	$: if (example && viewer && selectedStructure) {
 		retrieveFile(selectedStructure);
 	}
 </script>
@@ -77,20 +79,21 @@
 		<option value="cross">Cross</option>
 	</select>
 </div>
-<div class="mt-2">
-	<label for="file-select" class="mr-2">Files:</label>
-	<select
-		id="file-select"
-		class="rounded border border-gray-300"
-		bind:value={selectedStructure}
-		on:change={(e) => retrieveFile(e.target.value)}
-	>
-		{#each files as file}
-			<option value={file}>{file}</option>
-		{/each}
-	</select>
-</div>
-{givenFile}
+{#if example}
+	<div class="mt-2">
+		<label for="file-select" class="mr-2">Files:</label>
+		<select
+			id="file-select"
+			class="rounded border border-gray-300"
+			bind:value={selectedStructure}
+			on:change={(e) => retrieveFile(e.target.value)}
+		>
+			{#each files as file}
+				<option value={file}>{file}</option>
+			{/each}
+		</select>
+	</div>
+{/if}
 
 <style>
 	.mol-container {

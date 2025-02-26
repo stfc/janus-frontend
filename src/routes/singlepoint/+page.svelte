@@ -10,8 +10,6 @@
 	import ThreeDmol from '$lib/components/ThreeDmol.svelte';
 	import Weas from '$lib/components/weas.svelte';
 
-	// import Calculate from '+page.js';
-
 	export let data;
 
 	let showUploader = false;
@@ -137,10 +135,9 @@
 	</div>
 	<div class="px-4 py-4">
 		{#if showResults}
-			<ThreeDmol givenFile={fileContent} />
-			<Weas givenFile={fileContent} />
+			<ThreeDmol givenFile={fileContent} example={false} />
+			<Weas givenFile={fileContent} example={false} />
 			<DataDisplay data={results} />
 		{/if}
 	</div>
-	<div class="flex px-4"></div>
 </div>

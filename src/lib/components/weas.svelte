@@ -10,6 +10,7 @@
 	export let givenFile = undefined;
 	export let height = 300;
 	export let width = 100;
+	export let example = true;
 
 	async function retrieveFile(file) {
 		const response = await fetch(`/src/lib/cif/${file}`);
@@ -65,11 +66,12 @@
 			if (givenFile) {
 				updateViewer(givenFile);
 			} else {
-				updateAtoms(selectedStructure);
+				await updateAtoms(selectedStructure);
 			}
 		}
 	});
-	$: if (weas && selectedStructure) {
+
+	$: if (weas && example && selectedStructure) {
 		updateAtoms(selectedStructure);
 	}
 </script>
@@ -78,27 +80,25 @@
 <label for="file-upload" class="custom-file-upload">
 	<i class="fas fa-cloud-upload-alt"></i> Upload Structure
 </label>
-<input id="file-upload" type="file" style="display: none" on:change={handleFileUpload} />
-<div class="mt-2">
-	<label for="file-select" class="mr-2">Files:</label>
-	<select
-		id="file-select"
-		class="rounded border border-gray-300"
-		bind:value={selectedStructure}
-		on:change={() => updateAtoms(selectedStructure)}
-	>
-		{#each files as file}
-			<option value={file}>{file}</option>
-		{/each}
-	</select>
-</div>
+<input id="file-upload" type="file" on:change={handleFileUpload} />
+{#if example}
+	<div class="mt-2">
+		<label for="file-select" class="mr-2">Files:</label>
+		<select
+			id="file-select"
+			class="rounded border border-gray-300"
+			bind:value={selectedStructure}
+			on:change={() => updateAtoms(selectedStructure)}
+		>
+			{#each files as file}
+				<option value={file}>{file}</option>
+			{/each}
+		</select>
+	</div>
+{/if}
 
 <style>
-	/* @import 'weas/dist/style.css'; */
-	/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'); */
-
 	#viewer {
 		position: relative;
-		width: 100%;
 	}
 </style>
