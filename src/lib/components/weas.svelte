@@ -21,11 +21,15 @@
 		console.error('Failed to load file content');
 	}
 
-	async function updateViewer(fileContent) {
+	async function updateViewer(fileContent, format = 'cif') {
 		if (!editor) return;
 		editor.clear();
-		const atomsList = await weas.parseCIF(fileContent);
-
+		let atomsList;
+		if (format === 'cif') {
+			atomsList = await weas.parseCIF(fileContent);
+		} else if (format === 'xyz') {
+			atomsList = await weas.parseXYZ(fileContent);
+		}
 		if (!atomsList) {
 			console.error('Failed to parse structure data');
 			return;
@@ -42,7 +46,13 @@
 
 	async function updateAtoms(filename, fileContent = null) {
 		const structureData = fileContent || (await retrieveFile(filename));
-		await updateViewer(structureData);
+		if (filename.endsWith('.cif')) {
+			await updateViewer(structureData);
+		} else if (filename.endsWith('.xyz')) {
+			await updateViewer(structureData, 'xyz');
+		} else {
+			console.error('Format should be .cif or .xyz');
+		}
 	}
 
 	function handleFileUpload(event) {

@@ -20,13 +20,7 @@
 	const properties = ['forces', 'energy', 'stress', 'hessian'];
 	/** @type {Object} */
 	let results;
-	let fileContent = `
-    3
-    Example XYZ file
-    H 0.0 0.0 0.0
-    O 0.0 0.0 1.0
-    H 1.0 0.0 0.0
-    `;
+	let fileContent;
 
 	let selectedDataStructure = filenames[0];
 	let selectedArchitecture = archList[0];

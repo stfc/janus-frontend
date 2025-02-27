@@ -1,15 +1,19 @@
 <script>
 	import { onMount } from 'svelte';
 	export let givenFile = undefined;
+
+	// Initialize files before using it
+	const fileList = import.meta.glob('/src/lib/cif/*');
+	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
+
+	export let selectedStructure = files[0];
+	export let height = 300; // Height in pixels
+	export let width = 100; // Width in percentage
+
 	/* Global Jmol */
 	let JmolDiv;
 
 	const myJmol = 'myJmol';
-	const fileList = import.meta.glob('/src/lib/cif/*');
-	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
-	export let selectedStructure = files[0];
-	export let height = 300; // Height in pixels
-	export let width = 100; // Width in percentage
 	let zoom = 20;
 
 	function calcZoom() {
@@ -43,13 +47,16 @@
 			script = `
 		  load DATA "modelCIF"
 		  ${givenFile}
-		  END "modelCIF"`;
+		  END "modelCIF";
+		  zoom ${zoom}
+		`;
 		} else {
 			script = `
 		  load /src/lib/cif/${selectedStructure};
 		  zoom ${zoom}
 		`;
 		}
+		console.log(script);
 		const JmolInfo = {
 			width: '100%',
 			height: '100%',
@@ -65,8 +72,6 @@
 		};
 		document.head.appendChild(scriptElement);
 	});
-
-	// Define Jmol as a global variable to avoid linting errors
 	/* global Jmol */
 </script>
 
