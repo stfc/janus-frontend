@@ -17,7 +17,8 @@
 	const archList = ['mace_mp', 'mace', 'mace_off', 'm3gnet', 'chgnet', 'alignn', 'sevennet'];
 	/** @type {Object} */
 	let results;
-	let fileContent;
+	let resultsFileContent;
+	let trajFileContents;
 
 	let selectedDataStructure = filenames[0];
 	let selectedArchitecture = archList[0];
@@ -72,7 +73,8 @@
 			}
 			const data = await response.json();
 			results = data.results;
-			fileContent = data.file.content;
+			resultsFileContent = data.results_file.content;
+			trajFileContents = data.traj_file.content;
 			showResults = true;
 			toggleWaiting();
 			console.log('Calculation result:', results);
@@ -126,9 +128,10 @@
 	</div>
 	<div class="px-4 py-4">
 		{#if showResults}
-			<ThreeDmol givenFile={fileContent} example={false} />
-			<Weas givenFile={fileContent} example={false} />
+			<ThreeDmol givenFile={resultsFileContent} example={false} />
+			<Weas givenFile={resultsFileContent} example={false} />
 			<DataDisplay data={results} />
 		{/if}
 	</div>
 </div>
+{trajFileContents}
