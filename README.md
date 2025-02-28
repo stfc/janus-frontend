@@ -13,7 +13,7 @@ npm install
 
 ## Setup and developing
 
-Once you've installed dependencies, copy .env-template and rename the copy `.env` and change the variables as required. To run locally use `localhost` for HOST and `http://localhost:8000` for API_URL. To start a development server run with npm:
+Once you've installed dependencies, copy .env-template and rename the copy `.env` and change the variables as required. Default settings allow you to run the server locally. To start a development server run with npm:
 
 ```bash
 npm run dev
