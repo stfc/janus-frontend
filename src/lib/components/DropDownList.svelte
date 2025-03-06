@@ -11,18 +11,18 @@
 	}
 </script>
 
-<div class="flex w-48 flex-col">
+<div class="flex flex-col">
 	{#if title}
-		<label for="dropdown" class="mb-2 font-semibold">{title}</label>
+		<label for="dropdown" class="font-semibold">{title}</label>
 	{/if}
 	{#if items.length > 0}
-		<select id="dropdown" bind:value={selected} on:change={handleChange} class="rounded border p-2">
+		<select id="dropdown" bind:value={selected} on:change={handleChange} class="rounded border">
 			{#each items as item}
 				<option value={item}>{item}</option>
 			{/each}
 		</select>
 	{:else}
-		<select id="dropdown" class="rounded border border-gray-200 bg-gray-100 p-2 text-gray-400">
+		<select id="dropdown" class="rounded border border-gray-200 bg-gray-100 text-gray-400">
 			<option>{'No files found'}</option>
 		</select>
 	{/if}

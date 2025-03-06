@@ -18,7 +18,7 @@
 
 <div class="flex w-48 flex-col">
 	{#if title}
-		<div class="mb-2 font-semibold">{title}</div>
+		<div class="font-semibold">{title}</div>
 	{/if}
 	<div class="rounded border border-gray-500 p-2">
 		{#if items.length > 0}

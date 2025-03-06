@@ -7,8 +7,8 @@
 	export let max = 999;
 </script>
 
-<div class="flex flex-col p-2">
-	<label for={title} class="w-30 font-semibold text-gray-700">{title} value:</label>
+<div class="flex flex-col">
+	<label for={title} class="font-semibold text-gray-700">{title} value:</label>
 	<input
 		id={title}
 		type="number"
@@ -16,6 +16,6 @@
 		{max}
 		step={stepValue}
 		bind:value={selectedValue}
-		class="w-20 rounded border px-2 py-1"
+		class="rounded border"
 	/>
 </div>

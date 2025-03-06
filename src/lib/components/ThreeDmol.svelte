@@ -5,6 +5,7 @@
 	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
 	export let selectedStructure = files[0];
 	export let givenFile = undefined;
+	export let givenFormat = 'cif';
 	export let height = 300;
 	export let width = '100%'; // Add width as a prop
 	export let example = true;
@@ -34,7 +35,7 @@
 	function updateViewer(newFile) {
 		if (viewer) {
 			viewer.removeAllModels();
-			viewer.addModel(newFile, 'cif');
+			viewer.addModel(newFile, givenFormat);
 			updateStyle('default');
 			viewer.zoomTo();
 			viewer.render();
@@ -60,6 +61,9 @@
 
 	$: if (example && viewer && selectedStructure) {
 		retrieveFile(selectedStructure);
+	}
+	$: if (givenFile && !example && viewer) {
+		updateViewer(givenFile);
 	}
 </script>
 

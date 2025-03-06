@@ -131,6 +131,7 @@
 		{#if showResults}
 			<ThreeDmol givenFile={fileContent} example={false} />
 			<Weas givenFile={fileContent} example={false} />
+			{fileContent}
 			<DataDisplay data={results} />
 		{/if}
 	</div>

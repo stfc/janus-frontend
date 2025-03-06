@@ -4,6 +4,7 @@
 	let domElement;
 	let editor;
 	let weas;
+	export let givenFormat = 'cif';
 	const fileList = import.meta.glob('/src/lib/cif/*');
 	const files = Object.keys(fileList).map((file) => file.replace('/src/lib/cif/', ''));
 	export let selectedStructure = files[0];
@@ -21,7 +22,7 @@
 		console.error('Failed to load file content');
 	}
 
-	async function updateViewer(fileContent, format = 'cif') {
+	async function updateViewer(fileContent, format) {
 		if (!editor) return;
 		editor.clear();
 		let atomsList;
@@ -46,10 +47,14 @@
 
 	async function updateAtoms(filename, fileContent = null) {
 		const structureData = fileContent || (await retrieveFile(filename));
+		await updateViewer(structureData, formatCheck(filename));
+	}
+
+	function formatCheck(filename) {
 		if (filename.endsWith('.cif')) {
-			await updateViewer(structureData);
+			return 'cif';
 		} else if (filename.endsWith('.xyz')) {
-			await updateViewer(structureData, 'xyz');
+			return 'xyz';
 		} else {
 			console.error('Format should be .cif or .xyz');
 		}
@@ -74,7 +79,7 @@
 			editor = new weas.WEAS({ domElement });
 			window.editor = editor;
 			if (givenFile) {
-				updateViewer(givenFile);
+				updateViewer(givenFile, givenFormat);
 			} else {
 				await updateAtoms(selectedStructure);
 			}
@@ -93,7 +98,7 @@
 <input id="file-upload" type="file" on:change={handleFileUpload} />
 {#if example}
 	<div class="mt-2">
-		<label for="file-select" class="mr-2">Files:</label>
+		<label for="file-select" class="mr-2">Example files:</label>
 		<select
 			id="file-select"
 			class="rounded border border-gray-300"
