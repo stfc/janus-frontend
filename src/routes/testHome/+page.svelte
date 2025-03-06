@@ -1,7 +1,7 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Singlepoint from '$lib/components/Singlepoint.svelte';
-	import Weas from '$lib/components/weas.svelte';
+	// import Weas from '$lib/components/weas.svelte';
 	import UploadFile from '$lib/components/UploadFile.svelte';
 	import Geomopt from '$lib/components/Geomopt.svelte';
 	import TestWeas from '$lib/components/TestWeas.svelte';
@@ -65,9 +65,9 @@
 			None
 		</label>
 	</div>
-	{#if calculationMode == 1}
+	{#if calculationMode === 1}
 		<Singlepoint {data} bind:fileContent bind:selectedDataStructure />
-	{:else if calculationMode == 2}
+	{:else if calculationMode === 2}
 		<Geomopt {data} bind:fileContent bind:selectedDataStructure />
 	{/if}
 </div>

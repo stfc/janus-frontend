@@ -40,9 +40,11 @@
 		fetchData();
 	}
 
-	onMount(async () => {
+	function toggle_loaded() {
 		loaded = true;
-	});
+	}
+
+	onMount(toggle_loaded());
 </script>
 
 <div class="flex pl-4 pt-4">

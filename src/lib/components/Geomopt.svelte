@@ -11,8 +11,8 @@
 	const archList = ['mace_mp', 'mace', 'mace_off', 'm3gnet', 'chgnet', 'alignn', 'sevennet'];
 	/** @type {Object} */
 	let results;
-	let resultsFileContent;
-	let trajFileContents;
+	// let resultsFileContent;
+	// let trajFileContents;
 	let queryDict;
 	let selectedArchitecture = archList[0];
 	let selectedFmax = 0.1;
@@ -51,8 +51,8 @@
 			const data = await response.json();
 			console.log(data);
 			results = data.results;
-			resultsFileContent = data.results_file.content;
-			trajFileContents = data.traj_file.content;
+			// resultsFileContent = data.results_file.content;
+			// trajFileContents = data.traj_file.content;
 			selectedDataStructure = data.results_file.filename;
 			showResults = true;
 			toggleWaiting();

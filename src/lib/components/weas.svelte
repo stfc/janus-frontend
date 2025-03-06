@@ -55,9 +55,8 @@
 			return 'cif';
 		} else if (filename.endsWith('.xyz')) {
 			return 'xyz';
-		} else {
-			console.error('Format should be .cif or .xyz');
 		}
+		console.error('Format should be .cif or .xyz');
 	}
 
 	function handleFileUpload(event) {

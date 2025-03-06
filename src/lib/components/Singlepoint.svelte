@@ -14,7 +14,7 @@
 	const properties = ['forces', 'energy', 'stress', 'hessian'];
 	/** @type {Object} */
 	let results;
-	let fileContent;
+	// let fileContent;
 
 	let selectedArchitecture = archList[0];
 	let selectedProperty = properties.slice(0, 3);
@@ -53,7 +53,7 @@
 			}
 			const data = await response.json();
 			results = data.results;
-			fileContent = data.file.content;
+			// fileContent = data.file.content;
 			selectedDataStructure = data.file.filename;
 			showResults = true;
 			toggleWaiting();
