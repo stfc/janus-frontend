@@ -8,7 +8,7 @@
 	import ThreeDmol from '$lib/components/ThreeDmol.svelte';
 	export let data;
 	let selectedDataStructure;
-	let calculationMode = 0;
+	let calculationMode = 'None';
 	let fileContent = 'test';
 	let fileFormat = 'cif';
 
@@ -38,7 +38,7 @@
 			<input
 				type="radio"
 				name="calculationMode"
-				value="1"
+				value="singlepoint"
 				bind:group={calculationMode}
 				class="mr-2"
 			/>
@@ -48,7 +48,7 @@
 			<input
 				type="radio"
 				name="calculationMode"
-				value="2"
+				value="geomopt"
 				bind:group={calculationMode}
 				class="mr-2"
 			/>
@@ -58,19 +58,20 @@
 			<input
 				type="radio"
 				name="calculationMode"
-				value="0"
+				value="None"
 				bind:group={calculationMode}
 				class="mr-2"
 			/>
 			None
 		</label>
 	</div>
-	{#if calculationMode === 1}
-		<Singlepoint {data} bind:fileContent bind:selectedDataStructure />
-	{:else if calculationMode === 2}
-		<Geomopt {data} bind:fileContent bind:selectedDataStructure />
+
+	{#if calculationMode === 'singlepoint'}
+		<Singlepoint bind:selectedDataStructure />
+	{:else if calculationMode === 'geomopt'}
+		<Geomopt bind:selectedDataStructure />
 	{/if}
 </div>
 <TestWeas height={500} {fileContent} {fileFormat} />
-<ThreeDmol height={500} givenFile={fileContent} givenFormat={fileFormat} example={false} />
+<!-- <ThreeDmol height={500} givenFile={fileContent} givenFormat={fileFormat} example={false} /> -->
 <!-- <Weas height={800} givenFile={fileContent} givenFormat={fileFormat} example={false} /> -->
