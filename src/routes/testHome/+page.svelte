@@ -5,7 +5,7 @@
 	import UploadFile from '$lib/components/UploadFile.svelte';
 	import Geomopt from '$lib/components/Geomopt.svelte';
 	import TestWeas from '$lib/components/TestWeas.svelte';
-	import ThreeDmol from '$lib/components/ThreeDmol.svelte';
+	// import ThreeDmol from '$lib/components/ThreeDmol.svelte';
 	export let data;
 	let selectedDataStructure;
 	let calculationMode = 'None';
