@@ -72,6 +72,6 @@
 		<Geomopt bind:selectedDataStructure />
 	{/if}
 </div>
-<TestWeas height={500} {fileContent} {fileFormat} />
+<TestWeas height={800} {fileContent} {fileFormat} />
 <!-- <ThreeDmol height={500} givenFile={fileContent} givenFormat={fileFormat} example={false} /> -->
 <!-- <Weas height={800} givenFile={fileContent} givenFormat={fileFormat} example={false} /> -->
